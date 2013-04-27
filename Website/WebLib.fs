@@ -1,4 +1,10 @@
 ﻿[<AutoOpen>]
 module Website.WebLib
 
-type JS = IntelliFactory.WebSharper.Pervasives.JavaScriptAttribute
+open IntelliFactory.WebSharper
+open IntelliFactory.WebSharper.Pervasives
+
+type JS = JavaScriptAttribute
+
+[<Inline "Math.random()">]
+let random() : float = X
