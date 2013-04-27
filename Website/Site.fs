@@ -4,7 +4,7 @@ open IntelliFactory.Html
 open IntelliFactory.WebSharper.Sitelets
 
 type Pages =
-    | [<CompiledName "/">] Home
+    | [<CompiledName "">] Home
     | D3
 
 type Site() =
