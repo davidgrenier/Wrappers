@@ -20,6 +20,7 @@ let d3 =
         "style" => T<string> * (T<unit> ^-> T<string>) ^-> T<unit>
         "style" => T<string> * (T<int> ^-> T<string>) ^-> T<unit>
         "style" => T<string> * (T<int> * T<int> ^-> T<string>) ^-> T<unit>
+        "transition" => T<unit> ^-> d3
     ]
     |> WithSourceName "d3"
     |> Requires [d3js]

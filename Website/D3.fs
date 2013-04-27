@@ -22,6 +22,11 @@ let setTextSize() =
         .data([|4; 8; 15; 16; 23|])
         .style("font-size", fun (d: int) -> string d + "px")
 
+let backgroundToGrey() =
+    d3.select("body")
+        .transition()
+        .style("background-color", "grey")
+
 let body() =
     paintBodyBlack()
     Div [
@@ -35,4 +40,5 @@ let body() =
             paintPs()
             alternateGray()
             setTextSize()
+            backgroundToGrey()
         )
