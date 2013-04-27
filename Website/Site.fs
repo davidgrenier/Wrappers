@@ -18,7 +18,7 @@ type Site() =
                         {
                             Page.Default with
                                 Title = Some "D3 Examples"
-                                Body = [ Div [ new D3Examples() ] ]
+                                Body = [ Div [ new D3.Examples() ] ]
                         }
 
 [<assembly: Website(typeof<Site>)>]

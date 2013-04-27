@@ -1,10 +1,16 @@
-﻿namespace Website
+﻿module Website.D3
 
 open IntelliFactory.WebSharper
 open IntelliFactory.WebSharper.Html
+type d3 = Wrappers.D3.d3
 
-type D3Examples() =
+[<JS>]
+let paintBodyBlack() = d3.Select("body").Style("background-color", "black")
+
+type Examples() =
     inherit Web.Control()
 
-    [<JavaScript>]
-    override this.Body = Div [] :> _
+    [<JS>]
+    override this.Body =
+        paintBodyBlack()
+        Div [] :> _

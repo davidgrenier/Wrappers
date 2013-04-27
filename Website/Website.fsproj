@@ -33,6 +33,7 @@
     <OutputPath>..\Web\bin\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="WebLib.fs" />
     <Compile Include="D3.fs" />
     <Compile Include="Site.fs" />
   </ItemGroup>

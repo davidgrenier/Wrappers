@@ -2,4 +2,4 @@
 
 open IntelliFactory.WebSharper.InterfaceGenerator
 
-do Compiler.Compile stdout Definition.Assembly
+do Compiler.Compile stdout Definition.assembly
