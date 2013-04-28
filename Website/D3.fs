@@ -5,7 +5,7 @@ open IntelliFactory.WebSharper
 open IntelliFactory.WebSharper.Html
 type d3 = Wrappers.D3.d3
 
-let black (e: Dom.Element) =
+let black (e: Dom.Node) =
     d3.select(e).style("background-color", "black")
 
 let paintPs() =
@@ -25,10 +25,10 @@ let setTextSize() =
         .data([|4; 8; 15; 16; 23|])
         .style("font-size", fun (d: int) -> string d + "px")
 
-let backgroundToGrey (e: Dom.Element) =
+let backgroundToGrey (e: Dom.Node) =
     d3.select(e)
         .transition()
-        .style("background-color", "grey")
+        .style("background-color", "DarkRed")
 
 let matrix =
     [|
@@ -62,7 +62,22 @@ let svg =
         .attr("width", width)
         .attr("height", height)
         .append("g")
-        .attr("transform", "translate(" + (string (width / 2.0)) + "," + (string (height / 2.0)) + ")")    
+        .attr("transform", "translate(" + (string (width / 2.0)) + "," + (string (height / 2.0)) + ")")
+
+let fade (opacity: float) (g, i) =
+    svg.selectAll(".chord path")
+        .filter(fun d -> d.source.index <> i && d.target.index <> i)
+        .transition()
+        .style("opacity", opacity)
+
+do
+    svg.append("g")
+        .selectAll("path")
+        .data(chord.groups)
+        .enter().append("path")
+        .style("fill", fun (d: Wrappers.D3.indexed) -> fill d.index)
+        .style("stroke", fun (d: Wrappers.D3.indexed) -> fill d.index)
+    |> ignore
 
 let body() =
     Div [
@@ -77,8 +92,9 @@ let body() =
         Div [
             Text "test"
         ]
-    ] |>! (fun e -> black e.Dom)
-    |>! OnAfterRender(fun _ ->
+    ]
+    |>! OnAfterRender(fun e ->
+        e.Dom.ParentNode.ParentNode |> black
         paintPs()
         alternateGray()
         setTextSize()
