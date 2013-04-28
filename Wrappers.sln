@@ -2,9 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Website", "Website\Website.fsproj", "{DFFB6DC5-0685-4223-9DB5-CB60C2B4E2EF}"
-	ProjectSection(ProjectDependencies) = postProject
-		{BEF0E433-1F1C-437B-B170-DD943054EDA6} = {BEF0E433-1F1C-437B-B170-DD943054EDA6}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{6A7C06D1-CD9B-472D-94A4-D3C6D3D93B00}"
 EndProject
