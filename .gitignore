@@ -9,3 +9,4 @@ build.tmp
 repositories.config
 packages/WebSharper.2.4.85.235/*
 !*.targets
+!d3/bin/d3.dll
