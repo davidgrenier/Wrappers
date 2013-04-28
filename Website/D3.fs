@@ -7,10 +7,12 @@ type d3 = Wrappers.D3.d3
 
 let black (e: Dom.Node) =
     d3.select(e).style("background-color", "black")
+    |> ignore
 
 let paintPs() =
     d3.selectAll("p")
         .style("color", fun () -> "hsl(" + (random() * 360.0 |> int |> string) + ",100%,50%)")
+    |> ignore
 
 let alternateGray() =
     d3.selectAll("p")
@@ -19,16 +21,20 @@ let alternateGray() =
             | 0 -> "#fff"
             | _ -> "#aaa"
         )
+    |> ignore
 
 let setTextSize() =
     d3.selectAll("p")
         .data([|4; 8; 15; 16; 23|])
         .style("font-size", fun (d: int) -> string d + "px")
+    |> ignore
 
-let backgroundToGrey (e: Dom.Node) =
+let backgroundToRed (e: Dom.Node) =
     d3.select(e)
+        .style("background-color", "Black")
         .transition()
         .style("background-color", "DarkRed")
+    |> ignore
 
 let matrix =
     [|
@@ -88,7 +94,7 @@ let body() =
             P [Text "What can be asserted without proof can be dismissed without proof."]
             P [Text "Take the risk of thinking for yourself, much more happiness, truth, beauty, and wisdom will come to you that way."]
             Span []
-        ] |>! (fun e -> backgroundToGrey e.Dom)
+        ] |>! (fun e -> backgroundToRed e.Dom)
         Div [
             Text "test"
         ]

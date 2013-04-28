@@ -75,10 +75,10 @@ let selection =
     |+> Protocol [
         "data" => T<int []> ^-> selection
         Generic - fun t ->
-            "style" => T<string> * t ^-> T<unit>
-        "style" => T<string> * T<unit -> string> ^-> T<unit>
-        "style" => T<string> * T<int -> string> ^-> T<unit>
-        "style" => T<string> * T<int * int -> string> ^-> T<unit>
+            "style" => T<string> * t ^-> selection
+        "style" => T<string> * T<unit -> string> ^-> selection
+        "style" => T<string> * T<int -> string> ^-> selection
+        "style" => T<string> * T<int * int -> string> ^-> selection
         "style" => T<string> * (indexed ^-> T<unit>) ^-> selection
         "transition" => T<unit> ^-> selection
         "append" => T<string> ^-> selection
