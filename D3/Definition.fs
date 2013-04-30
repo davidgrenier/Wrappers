@@ -95,7 +95,7 @@ let selection =
 
 let arc =
     let arc = Type.New()
-    Class "arc"
+    Class "d3.svg.arc"
     |=> arc
     |+> [Constructor T<unit>]
     |+> Protocol [
