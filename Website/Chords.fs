@@ -8,7 +8,7 @@ type d3 = Wrappers.D3.d3
 type TickAngle =
     {
         angle: float
-        laben: string
+        label: string
     }
 
 let run () =
@@ -36,7 +36,7 @@ let run () =
         d3.scale
             .ordinal()
             .domain(d3.range 4)
-            .range([|0; 0xffdd89; 0x957244; 0xf26223|])
+            .range([|"#000000"; "#FFDD89"; "#957244"; "#F26223"|])
 
     let svg =
         d3.select("body")
@@ -70,7 +70,7 @@ let run () =
         |> Array.mapi (fun i v ->
                 {
                     angle = float v * k + d?startAngle
-                    laben = if i % 5 = 1 then null else (v / 1000 |> string) + "k"
+                    label = if i % 5 <> 0 then null else (v / 1000 |> string) + "k"
                 }
             )
 
@@ -83,7 +83,7 @@ let run () =
             .enter().append("g")
             .attr("transform", fun d -> "rotate(" + (string (d?angle * 18e1 / System.Math.PI - 9e1)) + ") translate(" + (string outerRadius) + ",0)")
 
-    ticks.append("text")
+    ticks.append("line")
         .attr("x1", 1)
         .attr("y1", 0)
         .attr("x2", 5)

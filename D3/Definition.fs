@@ -64,7 +64,7 @@ let ordinalScale =
     ]
     |+> Protocol [
         "domain" => T<int []> ^-> ordinal
-        "range" => T<int [] -> int -> unit>
+        "range" => T<string [] -> int -> unit>
     ]
     |> WithSourceName "ordinal"
 
