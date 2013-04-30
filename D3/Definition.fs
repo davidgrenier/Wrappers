@@ -12,6 +12,23 @@ let comparator =
     Class "d3.comparator"
     |> WithSourceName "d3.comparator"
 
+let chordEntity =
+    Class "d3.layout.chord.chordEntity"
+    |+> Protocol [
+        "index" =? T<int>
+        "subindex" =? T<int>
+        "startAngle" =? T<float>
+        "endAngle" =? T<float>
+        "value" =? T<int>
+    ]
+
+let chordInfo =
+    Class "d3.layout.chord.chordInfo"
+    |+> Protocol [
+        "source" =? chordEntity
+        "target" =? chordEntity
+    ]
+
 let chord =
     let chord = Class "d3.layout.chord"
     chord
@@ -23,6 +40,11 @@ let chord =
         "sortSubgroups" => comparator ^-> chord
         "matrix" => T<int [] []> ^-> chord
         "groups" =? T<int []>
+        "chords" =? Type.ArrayOf chordInfo
+    ]
+    |=> Nested [
+        chordInfo
+        chordEntity
     ]
     |> WithSourceName "chord"
 
@@ -53,47 +75,55 @@ let scale =
         ]
     |> WithSourceName "scale"
 
-let indexed =
-    Class "indexed"
-    |+> Protocol [
-        "index" =? T<int>
-    ]
-    |> WithSourceName "indexed"
-
-let datum =
-    Class "datum"
-    |+> Protocol [
-        "source" =? indexed
-        "target" =? indexed
-    ]
-    |> WithSourceName "datum"
-
 let selection =
     let selection = Type.New()
     Class "selection"
     |=> selection
     |+> Protocol [
-        "data" => T<int []> ^-> selection
-        Generic - fun t ->
-            "style" => T<string> * t ^-> selection
-        "style" => T<string> * T<unit -> string> ^-> selection
-        "style" => T<string> * T<int -> string> ^-> selection
-        "style" => T<string> * T<int * int -> string> ^-> selection
-        "style" => T<string> * (indexed ^-> T<unit>) ^-> selection
+        Generic - fun t -> "data" => Type.ArrayOf t ^-> selection
+        Generic - fun t1 t2 -> "data" => (t1 ^-> Type.ArrayOf t2) ^-> selection
+        Generic - fun t -> "style" => T<string> * t ^-> selection
+        Generic - fun t -> "attr" => T<string> * t ^-> selection
+        Generic - fun t -> "text" => (t ^-> T<string>) ^-> selection
         "transition" => T<unit> ^-> selection
         "append" => T<string> ^-> selection
-        Generic - fun t ->
-            "attr" => T<string> * t ^-> selection
         "selectAll" => T<string> ^-> selection
         "enter" => T<unit> ^-> selection
         "on" => T<string> * T<obj * int -> unit> ^-> selection
-        "filter" => (datum ^-> T<bool>) ^-> selection
+        Generic - fun t -> "filter" => (t ^-> T<bool>) ^-> selection
     ] |> WithSourceName "selection"
 
+let arc =
+    let arc = Type.New()
+    Class "arc"
+    |=> arc
+    |+> [Constructor T<unit>]
+    |+> Protocol [
+        "innerRadius" => T<float> ^-> arc
+        "outerRadius" => T<float> ^-> arc
+    ]
+    |> WithSourceName "arc"
+
+let chordGenerator =
+    let chord = Type.New()
+    Class "d3.svg.chord"
+    |=> chord
+    |+> [Constructor T<unit>]
+    |+> Protocol [
+        "radius" => T<float> ^-> chord
+    ]
+    |> WithSourceName "chord"
+
+let svg =
+    Class "d3.svg"
+    |=> Nested [
+        arc
+        chordGenerator
+    ]
+    |> WithSourceName "svg"
+
 let d3 =
-    let d3 = Type.New()
     Class "d3"
-    |=> d3
     |+> [
         "select" => T<string> ^-> selection
         "select" => T<Node> ^-> selection
@@ -102,9 +132,10 @@ let d3 =
         "range" => (!? T<int>) * T<int> * (!? T<int>) ^-> T<int []>
     ]
     |=> Nested [
-            layout
-            scale
-        ]
+        layout
+        scale
+        svg
+    ]
     |> WithSourceName "d3"
     |> Requires [d3js]
 
@@ -113,8 +144,6 @@ let assembly =
         Namespace "Wrappers.D3" [
             d3
             selection
-            datum
-            indexed
         ]
         Namespace "Wrappers.D3.Resources" [
             d3js

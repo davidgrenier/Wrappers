@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="chord.css" />
     <Content Include="Scripts\*.js" />
     <Content Include="Content\**\*.*" />
     <Content Include="Themes\**\*.*" />

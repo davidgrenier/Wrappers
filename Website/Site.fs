@@ -3,9 +3,10 @@
 open IntelliFactory.Html
 open IntelliFactory.WebSharper.Sitelets
 
-type Pages =
+type Page =
     | [<CompiledName "">] Home
-    | D3
+    | Chords
+    | Samples
 
 type Examples(page) =
     inherit IntelliFactory.WebSharper.Web.Control()
@@ -14,20 +15,27 @@ type Examples(page) =
     override this.Body =
         match page with
         | Home -> failwith "Should never happen"
-        | D3 -> D3.body()
+        | Samples -> Samples.body()
+        | Chords -> Chords.body()
         :> _
 
 type Site() =
-    interface IWebsite<Pages> with
+    let css = function
+        | Home -> failwith "Should never happen"
+        | Samples -> []
+        | Chords -> [Link [Rel "stylesheet"; Attributes.HRef "chord.css"]]
+
+    interface IWebsite<Page> with
         member __.Actions = []
         member __.Sitelet =
             Sitelet.Infer <| function
-                | Home -> Content.Redirect D3
+                | Home -> Content.Redirect Chords
                 | page ->
                     PageContent <| fun ctx ->
                         {
                             Page.Default with
                                 Title = Some "D3 Examples"
+                                Head = Tags.Meta [CharSet "utf-8"] :: css page
                                 Body = [ Div [ new Examples(page) ] ]
                         }
 

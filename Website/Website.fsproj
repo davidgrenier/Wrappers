@@ -25,7 +25,8 @@
   <Import Project="$(WEBSHARPER_HOME)/IntelliFactory.WebSharper.targets" />
   <ItemGroup>
     <Compile Include="WebLib.fs" />
-    <Compile Include="D3.fs" />
+    <Compile Include="Samples.fs" />
+    <Compile Include="Chords.fs" />
     <Compile Include="Site.fs" />
     <None Include="WebSharper.targets" />
     <None Include="packages.config" />

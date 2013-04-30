@@ -1,5 +1,5 @@
 ﻿[<JS>]
-module Website.D3
+module Website.Samples
 
 open IntelliFactory.WebSharper
 open IntelliFactory.WebSharper.Html
@@ -16,7 +16,7 @@ let paintPs() =
 
 let alternateGray() =
     d3.selectAll("p")
-        .style("background-color", fun (d, i) ->
+        .style("background-color", fun (_, i) ->
             match i % 2 with
             | 0 -> "#fff"
             | _ -> "#aaa"
@@ -34,55 +34,6 @@ let backgroundToRed (e: Dom.Node) =
         .style("background-color", "Black")
         .transition()
         .style("background-color", "DarkRed")
-    |> ignore
-
-let matrix =
-    [|
-        [|11975;  5871; 8916; 2868|]
-        [| 1951; 10048; 2060; 6171|]
-        [| 8010; 16145; 8090; 8045|]
-        [| 1013;   990;  940; 6907|]
-    |]
-
-let chord =
-    d3.layout
-        .chord()
-        .padding(0.05)
-        .sortSubgroups(d3.descending)
-        .matrix(matrix)
-
-let width = 960.0
-let height = 500.0
-let innerRadius = min width height * 0.41
-let outerRadius = innerRadius * 1.1
-
-let fill =
-    d3.scale
-        .ordinal()
-        .domain(d3.range 4)
-        .range([|0; 0xffdd89; 0x957244; 0xf26223|])
-
-let svg =
-    d3.select("body")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .append("g")
-        .attr("transform", "translate(" + (string (width / 2.0)) + "," + (string (height / 2.0)) + ")")
-
-let fade (opacity: float) (g, i) =
-    svg.selectAll(".chord path")
-        .filter(fun d -> d.source.index <> i && d.target.index <> i)
-        .transition()
-        .style("opacity", opacity)
-
-do
-    svg.append("g")
-        .selectAll("path")
-        .data(chord.groups)
-        .enter().append("path")
-        .style("fill", fun (d: Wrappers.D3.indexed) -> fill d.index)
-        .style("stroke", fun (d: Wrappers.D3.indexed) -> fill d.index)
     |> ignore
 
 let body() =

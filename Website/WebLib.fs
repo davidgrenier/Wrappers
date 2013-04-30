@@ -7,4 +7,4 @@ open IntelliFactory.WebSharper.Pervasives
 type JS = JavaScriptAttribute
 
 [<Inline "Math.random()">]
-let random() : float = X
+let random(): float = X
