@@ -129,7 +129,6 @@ let d3 =
         "select" => T<Node> ^-> selection
         "selectAll" => T<string> ^-> selection
         "descending" =? comparator
-        "range" => (!? T<int>) * T<int> * (!? T<int>) ^-> T<int []>
     ]
     |=> Nested [
         layout

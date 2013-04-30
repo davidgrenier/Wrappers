@@ -35,7 +35,7 @@ let run () =
     let fill =
         d3.scale
             .ordinal()
-            .domain(d3.range 4)
+            .domain([|0..3|])
             .range([|"#000000"; "#FFDD89"; "#957244"; "#F26223"|])
 
     let svg =
@@ -66,11 +66,11 @@ let run () =
 
     let groupTicks (d: obj) =
         let k: float = (d?endAngle - d?startAngle) / d?value
-        d3.range(0, d?value, 1000)
+        [|0..1000..d?value|]
         |> Array.mapi (fun i v ->
                 {
                     angle = float v * k + d?startAngle
-                    label = if i % 5 <> 0 then null else (v / 1000 |> string) + "k"
+                    label = if i % 5 = 0 then (v / 1000 |> string) + "k" else null
                 }
             )
 
