@@ -11,6 +11,14 @@ type TickAngle =
         label: string
     }
 
+type ChordGroup =
+    {
+        index: int
+        startAngle: float
+        endAngle: float
+        value: float
+    }
+
 let run () =
     let matrix =
         [|
@@ -44,7 +52,7 @@ let run () =
             .attr("width", width)
             .attr("height", height)
             .append("g")
-            .attr("transform", "translate(" + (string (width / 2.0)) + "," + (string (height / 2.0)) + ")")
+            .attr("transform", "translate(" + string (width / 2.0) + "," + string (height / 2.0) + ")")
 
     let fade (opacity: float) (g: obj, i: int) =
         svg.selectAll(".chord path")
@@ -57,20 +65,20 @@ let run () =
         .selectAll("path")
         .data(chord.groups)
         .enter().append("path")
-        .style("fill", fun d -> fill d?index)
-        .style("stroke", fun d -> fill d?index)
-        .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
+        .style("fill", fun d -> fill d.index)
+        .style("stroke", fun d -> fill d.index)
+        .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius outerRadius)
         .on("mouseover", fade 0.1)
         .on("mouseout", fade 1.0)
     |> ignore
 
-    let groupTicks (d: obj) =
-        let k: float = (d?endAngle - d?startAngle) / d?value
-        [|0..1000..d?value|]
+    let groupTicks d =
+        let k = (d.endAngle - d.startAngle) / d.value
+        [|0..1000..int d.value|]
         |> Array.mapi (fun i v ->
                 {
-                    angle = float v * k + d?startAngle
-                    label = if i % 5 = 0 then (v / 1000 |> string) + "k" else null
+                    angle = float v * k + d.startAngle
+                    label = if i % 5 = 0 then string (v / 1000) + "k" else null
                 }
             )
 
@@ -81,7 +89,7 @@ let run () =
             .enter().append("g").selectAll("g")
             .data(groupTicks)
             .enter().append("g")
-            .attr("transform", fun d -> "rotate(" + (string (d?angle * 18e1 / System.Math.PI - 9e1)) + ") translate(" + (string outerRadius) + ",0)")
+            .attr("transform", fun d -> "rotate(" + string (d.angle * 18e1 / System.Math.PI - 9e1) + ") translate(" + string outerRadius + ",0)")
 
     ticks.append("line")
         .attr("x1", 1)
@@ -94,9 +102,9 @@ let run () =
     ticks.append("text")
         .attr("x", 8)
         .attr("dy", ".35em")
-        .attr("transform", fun d -> if d?angle > System.Math.PI then "rotate(180) translate(-16)" else null)
-        .style("text-anchor", fun d -> if d?angle > System.Math.PI then "end" else null)
-        .text(fun d -> d?label)
+        .attr("transform", fun d -> if d.angle > System.Math.PI then "rotate(180) translate(-16)" else null)
+        .style("text-anchor", fun d -> if d.angle > System.Math.PI then "end" else null)
+        .text(fun d -> d.label)
     |> ignore
 
     svg.append("g")
@@ -104,8 +112,8 @@ let run () =
         .selectAll("path")
         .data(chord.chords)
         .enter().append("path")
-        .attr("d", d3.svg.chord().radius(innerRadius))
-        .style("fill", fun d -> fill(d?target?index))
+        .attr("d", d3.svg.chord().radius innerRadius)
+        .style("fill", fun d -> fill d?target?index)
         .style("opacity", 1)
     |> ignore
 
