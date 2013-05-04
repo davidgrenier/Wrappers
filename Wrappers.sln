@@ -5,7 +5,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Website", "Website\Website.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{6A7C06D1-CD9B-472D-94A4-D3C6D3D93B00}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "D3", "D3\D3.fsproj", "{BEF0E433-1F1C-437B-B170-DD943054EDA6}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "D3", "D3\D3.fsproj", "{EF7DBBCF-BE64-4F0C-B502-129A673E888D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3FB74F29-E1D3-4E13-B2E5-946C339FCD20}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,8 +23,8 @@ Global
 		{DFFB6DC5-0685-4223-9DB5-CB60C2B4E2EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6A7C06D1-CD9B-472D-94A4-D3C6D3D93B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A7C06D1-CD9B-472D-94A4-D3C6D3D93B00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BEF0E433-1F1C-437B-B170-DD943054EDA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BEF0E433-1F1C-437B-B170-DD943054EDA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF7DBBCF-BE64-4F0C-B502-129A673E888D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF7DBBCF-BE64-4F0C-B502-129A673E888D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

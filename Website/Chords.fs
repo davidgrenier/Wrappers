@@ -33,7 +33,7 @@ let run () =
             .chord()
             .padding(0.05)
             .sortSubgroups(d3.descending)
-            .matrix(matrix)
+            .matrix matrix
 
     let width = 960.0
     let height = 500.0
@@ -44,7 +44,7 @@ let run () =
         d3.scale
             .ordinal()
             .domain([|0..3|])
-            .range([|"#000000"; "#FFDD89"; "#957244"; "#F26223"|])
+            .range [|"#000000"; "#FFDD89"; "#957244"; "#F26223"|]
 
     let svg =
         d3.select("body")
@@ -59,7 +59,7 @@ let run () =
             .filter(fun d -> d?source?index <> i && d?target?index <> i)
             .transition()
             .style("opacity", opacity)
-            |> ignore
+        |> ignore
         
     svg.append("g")
         .selectAll("path")
@@ -118,5 +118,7 @@ let run () =
     |> ignore
 
 let body() =
-    Div []
-    |>! OnAfterRender (ignore >> run)
+    run()
+    Div [
+        A [HRef "https://github.com/davidgrenier/Wrappers/blob/master/Website/Chords.fs"; Text "Source"]
+    ]
